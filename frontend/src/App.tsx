@@ -1,6 +1,10 @@
+import NotificationButton from "./components/NotificationButton"
+
 function App() {
   return (
-    <h1>Ajustes iniciais, removendo alguns arquivos</h1>
+    <>
+    <NotificationButton />
+    </>
   )
 }
 
