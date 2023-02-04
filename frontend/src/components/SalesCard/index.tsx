@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import './styles.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { BASE_URL } from '../../utils/request'
 
 function SalesCard() {
 
@@ -13,7 +14,7 @@ function SalesCard() {
     const [maxDate, setMaxDate] = useState(new Date())
 
     useEffect(() => {
-        axios.get("https://wtiinfometa-production.up.railway.app/sales")
+        axios.get(`${BASE_URL}/sales`)
             .then(response => {
                 console.log(response.data)
             })
