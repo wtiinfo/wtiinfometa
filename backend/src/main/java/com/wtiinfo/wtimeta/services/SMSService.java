@@ -1,5 +1,7 @@
 package com.wtiinfo.wtimeta.services;
 
+import java.text.NumberFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,20 +29,26 @@ public class SMSService {
 	
 	@Autowired
 	private SaleRepository repository;
+	
+	private static final NumberFormat nf = NumberFormat.getCurrencyInstance();
 
 	public void sendSms(Long saleId) {
 
 		Sale sale = repository.findById(saleId).orElseThrow();
 		String dataSale = sale.getDate().getMonthValue() + "/" + sale.getDate().getYear();
 		
-		String msg = "Vendedor " + sale.getSellerName() + " fez " + sale.getDeals() + " vendas. Em " + dataSale; 
+		StringBuilder msg = new StringBuilder();
+		msg.append("Vendedor " + sale.getSellerName())
+			.append(" fez " + sale.getDeals())
+			.append(" vendas. Em " + dataSale)
+			.append(" Total: " + nf.format(sale.getAmount()))
 	;
 		Twilio.init(twilioSid, twilioKey);
 
 		PhoneNumber to = new PhoneNumber(twilioPhoneTo);
 		PhoneNumber from = new PhoneNumber(twilioPhoneFrom);
 
-		Message message = Message.creator(to, from, msg).create();
+		Message message = Message.creator(to, from, msg.toString()).create();
 
 		System.out.println(message.getSid());
 	}
