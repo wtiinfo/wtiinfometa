@@ -1,6 +1,7 @@
 package com.wtiinfo.wtimeta.services;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,7 @@ public class SMSService {
 	@Autowired
 	private SaleRepository repository;
 	
-	private static final NumberFormat nf = NumberFormat.getCurrencyInstance();
+	private static final NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
 	public void sendSms(Long saleId) {
 
